@@ -1,0 +1,2 @@
+method,precision,recall,f1,tp,fp,fn,runtime_seconds,device,images,crop_border_px,cutoff
+"TinyCD (B,A)",0.947785541838222,0.15547330312954497,0.2671274280195217,297181,16372,1614279,22.609,mps,32,8,0.5

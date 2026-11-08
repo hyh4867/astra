@@ -1,0 +1,2 @@
+device,platform_machine,images,tp,fp,fn,tn,runtime_seconds,threshold,tile_px,cpu_tp,cpu_fp,cpu_fn,cpu_runtime_seconds,delta_tp_vs_cpu,delta_fp_vs_cpu,delta_fn_vs_cpu,pixel_count_assert
+mps,arm64,128,6121218,484873,716186,126895451,62.105,0.5,256,6121218,484873,716186,587.051,0,0,0,True

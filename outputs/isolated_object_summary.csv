@@ -1,0 +1,4 @@
+method,n_isolated_gt_objects,completeness50_object_px,completeness50_note,false_alarm_objects_all_sizes,false_alarms_per_km2_all_sizes,false_alarm_objects_area_ge20_px,false_alarms_per_km2_area_ge20_px
+OpenCV basic,1360,9658.194155885021,log-area interpolation,933547,27821.868658065796,53977,1608.6399555206299
+OpenCV improved,1360,,below measured range (<100 px),66506,1982.0332527160645,53921,1606.971025466919
+TinyCD,1360,208.589229946232,log-area interpolation,635,18.924474716186523,251,7.480382919311523

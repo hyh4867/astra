@@ -1,0 +1,24 @@
+.venv/
+__pycache__/
+.pytest_cache/
+data/raw/
+data/benchmark/
+models/*.pth
+models/finetuned/
+data/demo_naip/
+outputs/sample_*.png
+outputs/test_good_*.png
+outputs/test_bad_*.png
+outputs/test_f1zero_*.png
+# Stale app captures and portfolio exports stay local; they may be regenerated.
+outputs/app_*.png
+outputs/naip_demo/
+outputs/finetune/
+outputs/diagnosis_round/
+outputs/portfolio/
+logs/
+.cache/
+.torch/
+outputs/.r4-chrome-profile/
+outputs/.r4-chrome-gui-profile/
+vendor/tinycd/models/

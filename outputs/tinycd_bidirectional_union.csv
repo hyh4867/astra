@@ -1,0 +1,2 @@
+method,precision,recall,f1,tp,fp,fn,forward_tp,forward_fp,forward_fn,reverse_tp,reverse_fp,reverse_fn,runtime_seconds,device,images,crop_border_px,threshold,interpretation
+"TinyCD (A,B) union (B,A)",0.924116030631073,0.9157497410356481,0.9199138641192028,1750419,143736,161041,1745965,133432,165495,297181,16372,1614279,34.923,mps,32,8,0.5,reference only; LEVIR labels do not encode direction

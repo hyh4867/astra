@@ -1,0 +1,6 @@
+# Optional dependencies for GeoTIFF uploads, NAIP COG windows, and object maps.
+rasterio==1.5.2
+pystac-client==0.9.1
+planetary-computer==1.0.0
+folium==0.20.0
+streamlit-folium==0.27.4

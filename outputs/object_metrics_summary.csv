@@ -1,0 +1,4 @@
+method,n_gt_objects,n_pred_objects,false_alarm_objects,test_area_km2,false_alarms_per_km2,completeness50_object_px,completeness50_note,runtime_seconds
+OpenCV basic,7027,998908,933547,33.554432,27821.868658065796,9982.504965085707,log-area interpolation,6.642
+OpenCV improved,7027,72784,66506,33.554432,1982.0332527160645,4093.4767547517254,log-area interpolation,3.819
+TinyCD,7027,7386,635,33.554432,18.924474716186523,30.69689364284237,log-area interpolation,158.79

@@ -1,0 +1,4 @@
+method,predicted_change_pixels,total_pixels,predicted_change_fraction,derangement_seed
+OpenCV basic,11542784,134217728,0.08600044250488281,42
+OpenCV improved,35782618,134217728,0.2666012793779373,42
+TinyCD,6606091,134217728,0.04921921342611313,42

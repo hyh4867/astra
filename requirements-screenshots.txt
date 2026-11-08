@@ -1,0 +1,4 @@
+# Optional headless screenshot tooling. Install Chromium with:
+# python -m playwright install chromium
+playwright>=1.50,<2
+websockets>=13,<18

@@ -1,0 +1,29 @@
+Per-image metrics: no-ground-truth-change images are excluded from metric summaries; see status and FP counts.
+
+OpenCV basic: valid=118, excluded_no_gt_change=10
+median precision=0.049721
+median recall=0.144178
+median f1=0.058064
+median iou=0.029900
+worst 5 by F1: test_58.png (0.0000), test_95.png (0.0002), test_61.png (0.0003), test_98.png (0.0009), test_99.png (0.0009)
+
+OpenCV improved: valid=118, excluded_no_gt_change=10
+median precision=0.047291
+median recall=0.297136
+median f1=0.078620
+median iou=0.040918
+worst 5 by F1: test_61.png (0.0000), test_59.png (0.0001), test_95.png (0.0001), test_88.png (0.0003), test_63.png (0.0004)
+
+OpenCV oracle: valid=118, excluded_no_gt_change=10
+median precision=0.050906
+median recall=0.168420
+median f1=0.060964
+median iou=0.031441
+worst 5 by F1: test_58.png (0.0000), test_95.png (0.0001), test_61.png (0.0002), test_99.png (0.0009), test_98.png (0.0011)
+
+TinyCD: valid=118, excluded_no_gt_change=10
+median precision=0.926926
+median recall=0.889751
+median f1=0.908407
+median iou=0.832189
+worst 5 by F1: test_59.png (0.0000), test_61.png (0.0000), test_63.png (0.0000), test_88.png (0.0000), test_98.png (0.0000)
