@@ -1,0 +1,98 @@
+{
+  "adapted_epoch": "3",
+  "adapted_sha256": "e49f2528798e30f7046a3bab818311ac9844885b5d94287dc5f1f20d5f2cd7ef",
+  "binary_revision": "7ebaa487d49215fdc684461ee52b41adafd83e86",
+  "geometry": "area 512 to 205, reflect-101 pad; bilinear probability to 512; unchanged GT",
+  "levir_test_manifest": "961d6a0ede7d84a2f18a2ea5745e7371363feaaa9871688911be902cb355d80b",
+  "manifests": {
+    "test": "9cd81f0fc028aac3ae174b7c1bef72ecd9578d2dea124cef8f950725231966cd",
+    "train": "fbc1a6cade91c59dda4ed92dfe8f06ef310273e772545d9cf2a2ef1c3da970e0",
+    "validation": "30c6cadb847f0ffc6c4babc2b09fc655005c20d56ff08d17912522dc86d1ace0"
+  },
+  "methods": {
+    "adapted": {
+      "cutoff": 0.5,
+      "grid": "half",
+      "reg": "off"
+    },
+    "calibrated": {
+      "cutoff": 0.3,
+      "grid": "half",
+      "reg": "off"
+    },
+    "original": {
+      "cutoff": 0.5,
+      "grid": "native",
+      "reg": "off"
+    }
+  },
+  "normalization": "ImageNet RGB; chronological pair; tiled 256",
+  "original_sha256": "743645b87199c96bd0c3271ae5df6f0918b3f1d84618dfb9396843ca08ee4a3e",
+  "packages": {
+    "Pillow": "11.3.0",
+    "numpy": "2.5.5",
+    "opencv-python-headless": "4.14.0.94",
+    "pyarrow": "26.0.1",
+    "rasterio": "1.5.2",
+    "torch": "2.15.0",
+    "torchvision": "0.29.2"
+  },
+  "polygon_revision": "92b677c881f0d973d76460204431c711ccbac25b",
+  "python": "3.12.8",
+  "registration": {
+    "best_new": "dft_5",
+    "scores": [
+      {
+        "clean_loss": 0.0017532725541464789,
+        "eligible": true,
+        "policy": "centroid_4",
+        "recovery": 0.2560740399994577,
+        "relative": 0.02238420184656147
+      },
+      {
+        "clean_loss": 0.0028441347342286205,
+        "eligible": false,
+        "policy": "dft_4",
+        "recovery": 0.2695550208247189,
+        "relative": 0.0451184463531091
+      },
+      {
+        "clean_loss": 0.0,
+        "eligible": true,
+        "policy": "dft_5",
+        "recovery": 0.20188342261219341,
+        "relative": 0.0451184463531091
+      },
+      {
+        "clean_loss": 0.0,
+        "eligible": true,
+        "policy": "dft_6",
+        "recovery": 0.16321490199411184,
+        "relative": 0.0451184463531091
+      },
+      {
+        "clean_loss": 0.003215662656930407,
+        "eligible": false,
+        "policy": "ecc_4",
+        "recovery": 0.2035215661585598,
+        "relative": 0.11051628596471443
+      },
+      {
+        "clean_loss": 0.0,
+        "eligible": true,
+        "policy": "ecc_5",
+        "recovery": 0.16421989919239596,
+        "relative": 0.11051628596471443
+      },
+      {
+        "clean_loss": 0.0,
+        "eligible": true,
+        "policy": "ecc_6",
+        "recovery": 0.12607701519907846,
+        "relative": 0.11051628596471443
+      }
+    ],
+    "selected": "centroid_4"
+  },
+  "scoring": "8-connected objects, .30 coverage, .10 false-alarm purity, seed42 derangement"
+}

@@ -93,7 +93,7 @@ def opencv_predictions(before: np.ndarray, after: np.ndarray):
     }
 
 
-def quality_checks(before: np.ndarray, after: np.ndarray, gsd_m: float):
+def quality_checks(before: np.ndarray, after: np.ndarray, gsd_m: float, include_shift: bool = True):
     if before.shape != after.shape:
         return {"shift_px": None, "shift_xy_px": None, "sharpness_a": None,
             "sharpness_b": None, "sharpness_ratio": None, "warnings": ["A/B dimensions differ; registration and sharpness checks are unavailable."]}
@@ -109,7 +109,7 @@ def quality_checks(before: np.ndarray, after: np.ndarray, gsd_m: float):
     sharp_b = float(cv2.Laplacian(gb, cv2.CV_32F).var())
     ratio = max(sharp_a, sharp_b) / max(min(sharp_a, sharp_b), 1e-6)
     warnings = []
-    if shift is not None and shift > 1.0:
+    if include_shift and shift is not None and shift > 1.0:
         warnings.append(f"Estimated image registration shift is {shift:.1f}px (warning threshold >1px). Interpret results with caution.")
     if ratio >= 2.0:
         warnings.append(f"A/B sharpness differs substantially (Laplacian variance ratio {ratio:.1f}×; threshold 2×).")

@@ -1,0 +1,36 @@
+{
+  "seed": 42,
+  "draws": 10000,
+  "pairs": 979,
+  "unit": "image pair",
+  "interval": "95% percentile, paired patch resampling",
+  "f1": {
+    "original": {
+      "estimate": 0.24305724910160653,
+      "lower": 0.20793050177414973,
+      "upper": 0.28216493574095136
+    },
+    "calibrated": {
+      "estimate": 0.3476195429675849,
+      "lower": 0.2996057682306286,
+      "upper": 0.39865592348854595
+    },
+    "adapted": {
+      "estimate": 0.5320099030905739,
+      "lower": 0.4781023771192675,
+      "upper": 0.5851616771726995
+    }
+  },
+  "changes": {
+    "original_to_calibrated": {
+      "estimate": 0.10456229386597837,
+      "lower": 0.06707647859151736,
+      "upper": 0.1431185639880562
+    },
+    "calibrated_to_adapted": {
+      "estimate": 0.18439036012298904,
+      "lower": 0.13960153529503827,
+      "upper": 0.23255931705943134
+    }
+  }
+}

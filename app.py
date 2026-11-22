@@ -21,6 +21,11 @@ from inference import (
 )
 from geospatial import align_pair, comparison_slider, object_features, read_image_bytes
 
+from registration import (
+    DEFAULT_CONFIG, STATUS_SMALL, alignment_composite, magnify,
+    register_pair, shift_image, shift_valid_mask, tile_diagnostic, zoom_window,
+)
+
 OUT = ROOT / "outputs"
 TEST_DATA = ROOT / "data" / "benchmark" / "test"
 NAIP_DATA = ROOT / "data" / "demo_naip" / "celina_town_2020_2022_overlap"
@@ -70,6 +75,12 @@ def image_pair(source: str, before_file, after_file, local_name: str | None):
         before[28:52, 38:65] = (105, 110, 120)
         after[28:52, 38:65] = (225, 220, 210)
         after[63:78, 86:110] = (200, 195, 185)
+        return before, after, None, None
+    if source == "합성 데모 · 반복 패턴":
+        yy, xx = np.mgrid[:256, :256]
+        stripes = np.repeat((((xx // 8) % 2) * 150 + 50).astype(np.uint8)[..., None], 3, axis=2)
+        before = stripes.copy(); after = shift_image(stripes, 5, 0)
+        after[100:140, 60:120] = (225, 220, 210)
         return before, after, None, None
     if source == "로컬 LEVIR test pair":
         if not local_name:
@@ -197,6 +208,10 @@ def render_results():
         st.subheader(t("NAIP qualitative check · no ground truth","NAIP 정성 확인 · 정답 없음"))
         st.dataframe(rows,hide_index=True,width="stretch")
         st.caption(t("NAIP object counts are descriptive only and were not used to select checkpoints.","NAIP 객체 수는 설명용이며 checkpoint 선택에 사용하지 않았습니다."))
+    registration_rows=read_csv(OUT/"registration"/"test_overlap_summary.csv")
+    if registration_rows:
+        st.subheader(t("LEVIR registration on common image support","LEVIR 공통 유효영역 정렬 결과"))
+        st.dataframe([{k:r[k] for k in ("inj_dx","inj_dy","condition","precision","recall","f1","held_pairs")} for r in registration_rows if r["subset"]=="test128"],hide_index=True)
     directional_union=read_csv(OUT/"tinycd_bidirectional_union.csv")
     if directional_union:
         r=directional_union[0]
@@ -222,7 +237,11 @@ def render_results():
     for name, caption in charts:
         path=OUT/name
         if path.is_file(): st.image(str(path),caption=caption,width="stretch")
-        else: st.caption(t(f"Result file not available yet: {name}",f"아직 결과 파일이 없습니다: {name}"))
+        elif "/" not in name:
+            first_release="https://raw.githubusercontent.com/hyh4867/astra/8b145ad4d357577f334687fa3d8b07d97f3dc801"
+            st.image(f"{first_release}/outputs/{name}",caption=caption,width="stretch")
+        else:
+            st.caption(t(f"Result file not available yet: {name}",f"아직 결과 파일이 없습니다: {name}"))
 
 
 st.title("ASTRA: AI Satellite Change Detection")
@@ -234,9 +253,12 @@ with tab_analyze:
     source_options=[t("NAIP public demo", "NAIP 공개 데모"),t("Upload images", "파일 업로드"),t("Local LEVIR test pair", "로컬 LEVIR test pair")]
     if test_mode:
         source_options.insert(2,t("Synthetic demo", "합성 데모"))
+        source_options.append(t("Synthetic repeating pattern","합성 데모 · 반복 패턴"))
     demo_index=source_options.index(t("Synthetic demo", "합성 데모")) if test_mode else 0
+    if test_mode and st.query_params.get("source")=="repeat":
+        demo_index=len(source_options)-1
     source_label = st.selectbox(t("Image source", "영상 입력"), source_options, index=demo_index, key="image_source")
-    source = {t("NAIP public demo", "NAIP 공개 데모"):"NAIP 공개 데모",t("Upload images", "파일 업로드"):"파일 업로드",t("Local LEVIR test pair", "로컬 LEVIR test pair"):"로컬 LEVIR test pair",t("Synthetic demo", "합성 데모"):"합성 데모"}[source_label]
+    source = {t("Synthetic repeating pattern","합성 데모 · 반복 패턴"):"합성 데모 · 반복 패턴",t("NAIP public demo", "NAIP 공개 데모"):"NAIP 공개 데모",t("Upload images", "파일 업로드"):"파일 업로드",t("Local LEVIR test pair", "로컬 LEVIR test pair"):"로컬 LEVIR test pair",t("Synthetic demo", "합성 데모"):"합성 데모"}[source_label]
     if source == "NAIP 공개 데모":
         st.info(t("Qualitative demo only · USDA NAIP (Celina, TX; 2020 → 2022, 0.6 m GSD) · no ground truth", "질적 시연 전용 · USDA NAIP 공개 항공영상 (Celina, TX; 2020 → 2022, 0.6 m GSD) · 정답 없음"))
     before_file=after_file=None; local_name=None
@@ -249,7 +271,7 @@ with tab_analyze:
         if local_names: local_name=st.selectbox("로컬 test pair",local_names,key="local_sample")
         else: st.info("로컬 LEVIR test 이미지를 찾을 수 없습니다. 업로드 또는 합성 데모를 선택하세요.")
 
-    method=st.selectbox(t("Detection method","탐지 방법"),METHODS,index=2,key="method")
+    method=st.selectbox(t("Detection method","탐지 방법"),METHODS,index=0 if st.query_params.get("source")=="repeat" else 2,key="method")
     robust_weights=ROOT/"models"/"finetuned"/"tinycd_robust_v2_seed42_best.pth"
     model_variant="Original"
     if method=="TinyCD":
@@ -284,7 +306,60 @@ with tab_analyze:
     elif before.shape != after.shape:
         st.error(t(f"A and B must have matching pixel dimensions. A={before.shape[:2]}, B={after.shape[:2]}",f"A와 B는 같은 픽셀 크기여야 합니다. 현재 A={before.shape[:2]}, B={after.shape[:2]}"))
     else:
-        checks=quality_checks(before,after,gsd)
+        st.subheader(t("Alignment check","정렬 점검"))
+        original_after=after
+        modes=[t("Automatic","자동 (믿을 만할 때만 보정)"),t("Apply estimate manually","추정값 수동 적용"),t("Off","끄기")]
+        with st.expander(t("Inject a shift into B for a demonstration","정렬 시험: B를 일부러 이동시켜 보기")):
+            shifts=st.columns(2)
+            def initial_shift(axis):
+                try:
+                    return int(np.clip(int(st.query_params.get("shift_"+axis,0)),-12,12))
+                except (TypeError,ValueError):
+                    return 0
+            dx=shifts[0].number_input("dx (px)",-12,12,initial_shift("dx"),key="demo_shift_dx")
+            dy=shifts[1].number_input("dy (px)",-12,12,initial_shift("dy"),key="demo_shift_dy")
+        if dx or dy:
+            original_after=shift_image(after,dx,dy)
+        mode=st.radio(t("Residual translation correction","잔여 x/y 이동 보정"),modes,
+            index={"auto":0,"manual":1}.get(st.query_params.get("reg"),2),horizontal=True,key="registration_mode")
+        registration=register_pair(before,original_after,DEFAULT_CONFIG)
+        review_only=registration.needs_review
+        after=original_after
+        valid_mask=np.ones(before.shape[:2],dtype=bool)
+        move=(0,0)
+        if mode==modes[0] and registration.applied:
+            after,valid_mask=registration.after_aligned,registration.valid_mask
+            move=(registration.applied_dx,registration.applied_dy)
+        elif mode==modes[1]:
+            move=(round(-registration.dx),round(-registration.dy))
+            if any(move):
+                after=shift_image(original_after,*move)
+                valid_mask=shift_valid_mask(before.shape[:2],*move)
+        reg_cols=st.columns(3)
+        reg_cols[0].metric(t("Estimated dx","추정 이동 dx"),f"{registration.dx:+.2f} px")
+        reg_cols[1].metric(t("Estimated dy","추정 이동 dy"),f"{registration.dy:+.2f} px")
+        reg_cols[2].metric(t("Correction applied","보정 적용"),t("Yes","예") if any(move) else t("No","아니오"))
+        if review_only:
+            st.error(t("Review alignment before interpreting these candidates.","정렬 확인 필요 · 원본 영상을 확인하세요."))
+            for reason,message in zip(registration.reasons,registration.reason_messages):
+                st.markdown(t(f"- Reason for review: {reason.replace('_',' ')}",f"- 확인이 필요한 이유: {message}"))
+        if any(move):
+            label=t("Automatic correction","자동 보정 적용") if mode==modes[0] else t("Manual correction","수동 적용")
+            st.success(f"{label} · dx={move[0]:+.0f}px, dy={move[1]:+.0f}px")
+        elif mode==modes[2]:
+            st.info(t("Correction off. Compare the building outlines in the overlay.","보정 끔 · 겹쳐 보기에서 건물 윤곽을 비교하세요."))
+        elif registration.status==STATUS_SMALL:
+            st.info(t("Estimated shift is below the automatic correction threshold.","추정 이동이 자동 보정 기준 미만입니다."))
+        if registration.tiles:
+            with st.expander(t("Inspect alignment by tile","구역별 정렬 확인")):
+                st.image(tile_diagnostic(original_after,registration),caption=t("Green: agreement. Red: disagreement. Gray: insufficient texture.","초록: 일치, 빨강: 불일치, 회색: 판단 불가"))
+                tiles=sorted(registration.tiles,key=lambda tile:(tile.agrees,not tile.informative,-tile.peak_ratio))
+                tile=st.selectbox(t("Tile (row, column)","구역 (행, 열)"),tiles,format_func=lambda v:f"{v.row0}, {v.col0}",key="registration_tile")
+                r0,r1,c0,c1=zoom_window(before.shape[:2],tile)
+                for panel,image,caption in zip(st.columns(2),(original_after,after),
+                        (t("Original B vs A","원본 B와 A"),t("Selected B vs A","선택한 B와 A"))):
+                    panel.image(magnify(alignment_composite(before[r0:r1,c0:c1],image[r0:r1,c0:c1])),caption=caption)
+        checks=quality_checks(before,after,gsd,include_shift=False)
         for message in checks["warnings"]:
             if LANG=="한국어":
                 if message.startswith("Estimated image registration shift"):
@@ -327,13 +402,15 @@ with tab_analyze:
             probability=strength
             st.caption(t("Fixed OpenCV settings: basic absdiff threshold=105 · improved Gaussian 3×3 + Otsu + 5×5 morphology","OpenCV 고정 설정: 기본 absdiff threshold=105 · 개선형 Gaussian 3×3 + Otsu + morphology 5×5"))
         if not analysis_failed:
+            mask=mask & valid_mask
+            probability=np.where(valid_mask,probability,0)
             mask,object_filter=filter_small_components(mask,gsd,minimum_object_area_m2)
             if appeared_mask is not None:
                 appeared_mask=appeared_mask & mask
                 possibly_disappeared_mask=possibly_disappeared_mask & mask
             summary=changed_object_summary(mask,gsd)
             cols=st.columns(4)
-            cols[0].metric(t("Changed objects","변화 객체"),f"{summary['count']:,}")
+            cols[0].metric(t("Candidates for review","검토용 후보 객체") if review_only else t("Changed objects","변화 객체"),f"{summary['count']:,}")
             cols[1].metric(t("Total area","변화 면적"),f"{summary['total_area_m2']:,.1f} m²")
             cols[2].metric(t("Changed pixels","변화 픽셀"),f"{summary['changed_pixels']:,}")
             cols[3].metric(t("Median object area","객체 중앙 면적"),f"{summary['median_object_area_m2']:,.1f} m²")
@@ -358,7 +435,7 @@ with tab_analyze:
                                     f"면적 기준 미만 component {object_filter['removed_sub_floor_components']:,}개 제외 "
                                     f"({object_filter['raw_count']:,} → {object_filter['kept_count']:,}개).")
             st.caption(filter_message)
-            images=[before,after,probability_heatmap(probability),make_overlay(after,mask)]
+            images=[before,after,probability_heatmap(probability),make_overlay(after,mask,(255,170,0) if review_only else (255,0,0))]
             captions=["A = before (older)", "B = after (newer)", t("Change probability / intensity heatmap","변화 확률/강도 heatmap"),t("Change mask overlay (experimental union)","변화 mask overlay (실험 union)") if bidirectional else t("Change mask overlay","변화 mask overlay")]
             panels=st.columns(4)
             for col,caption,image in zip(panels,captions,images):
@@ -370,18 +447,27 @@ with tab_analyze:
             legend_labels[2].caption(t("1.0 high","1.0 높음"))
             panels[2].caption(t("TinyCD probability / normalized OpenCV change intensity","TinyCD 확률 / OpenCV 정규화 변화 강도"))
             st.subheader(t("Before / after swipe comparison","Before / after swipe 비교"))
+            swipe_after=after
+            if any(move) and st.radio(t("Compare against","비교할 B"),[t("Corrected B","보정 후 B"),t("Original B","원본 B")],horizontal=True,key="swipe_b_choice")==t("Original B","원본 B"):
+                swipe_after=original_after
             slider_scale=min(1.0,1200/max(before.shape[1],after.shape[1]))
             if slider_scale<1:
                 slider_size=(round(before.shape[1]*slider_scale),round(before.shape[0]*slider_scale))
-                slider_a=np.asarray(Image.fromarray(before).resize(slider_size,Image.Resampling.LANCZOS));slider_b=np.asarray(Image.fromarray(after).resize(slider_size,Image.Resampling.LANCZOS))
-            else: slider_a,slider_b=before,after
+                slider_a=np.asarray(Image.fromarray(before).resize(slider_size,Image.Resampling.LANCZOS));slider_b=np.asarray(Image.fromarray(swipe_after).resize(slider_size,Image.Resampling.LANCZOS))
+            else: slider_a,slider_b=before,swipe_after
             components.html(comparison_slider(slider_a,slider_b),height=525,scrolling=False)
             object_rows,object_geojson=object_features(mask,probability,geo,gsd)
-            st.subheader(t("Changed objects","변화 객체 목록"))
+            alignment_status="review" if review_only else ("corrected" if any(move) else "as_is")
+            for row in object_rows:
+                row.update(alignment_status=alignment_status,review_only=review_only)
+            if object_geojson:
+                for feature in object_geojson["features"]:
+                    feature["properties"].update(alignment_status=alignment_status,review_only=review_only)
+            st.subheader(t("Candidates for review","검토용 후보 목록") if review_only else t("Changed objects","변화 객체 목록"))
             st.caption(t("Sort by area, centroid, or mean probability. Georeferenced inputs use a local UTM CRS for area and geographic centroids.","표를 정렬해 확인하세요. 지오참조 입력은 지역 UTM 좌표계로 면적을 계산하고 중심 좌표를 경위도로 표시합니다."))
             st.dataframe(object_rows,hide_index=True,width="stretch")
             csv_buffer=BytesIO()
-            columns=["object_id","area_m2","centroid_lon","centroid_lat","centroid_x_px","centroid_y_px","mean_probability","pixel_count","area_crs"]
+            columns=["object_id","area_m2","centroid_lon","centroid_lat","centroid_x_px","centroid_y_px","mean_probability","pixel_count","area_crs","alignment_status","review_only"]
             text_buffer=__import__("io").StringIO()
             writer=csv.DictWriter(text_buffer,fieldnames=columns,extrasaction="ignore");writer.writeheader();writer.writerows(object_rows)
             csv_buffer.write(text_buffer.getvalue().encode("utf-8-sig"));csv_buffer.seek(0)
@@ -426,24 +512,24 @@ with tab_results:
 with tab_limits:
     st.subheader(t("Scope and limitations","적용 범위와 한계"))
     st.markdown(t("""
-- **Domain:** Quantitative results cover LEVIR-CD only; generalization to other sensors or regions is untested.
+- **Domain:** Quantitative results cover LEVIR-CD and the French FOTBCD-Binary test split.
 - **Target:** The benchmark labels building changes. Do not treat this as a detector for roads, vegetation, water, or arbitrary change.
-- **Direction:** TinyCD behaves like an appearance detector, likely reflecting growth-heavy LEVIR labels. Disappearance/demolition is unvalidated.
+- **Direction:** TinyCD behaves like an appearance detector, likely reflecting growth-heavy LEVIR labels. Recall for disappeared buildings on FOTBCD-Binary is reported in the README.
 - **Small objects:** Isolated changes below about 50 m² are often missed.
 - **Use:** Research and education demo only; not for operational decisions.
-- **Registration:** A/B shifts above 1 px raise a warning; phase correlation can also react to real changes.
+- **Registration:** Optional registration estimates translation only. Ambiguous matches require review.
 - **Resolution:** Trained at about 0.5 m/px and sensitive to coarser GSD, sharpness mismatch, and blur.
 - **Licensing:** Follow LEVIR academic terms and TinyCD non-commercial research terms. Data, weights, and image previews are excluded from Git.
 - **NAIP:** Small public-domain USDA imagery window, qualitative only, with no ground truth.
 - **GeoTIFF:** GeoJSON and map coordinates require georeferenced GeoTIFF inputs.
 - **Safety:** Research/education demo; never use for real operational decisions.
 """, """
-- **도메인:** 정량 벤치마크는 LEVIR-CD에 한정되며 다른 센서·지역 일반화는 미검증입니다.
+- **도메인:** LEVIR-CD와 프랑스 FOTBCD-Binary 공식 시험 분할에서 정량 평가했습니다.
 - **대상:** 건물 변화 라벨 기준입니다. 도로·식생·수면 등 임의 변화 탐지기로 해석하지 마세요.
-- **방향성:** TinyCD는 appearance detector처럼 보이며 성장 위주인 LEVIR 라벨을 반영했을 수 있습니다. 소멸/철거는 검증되지 않았습니다.
+- **방향성:** TinyCD는 appearance detector처럼 보이며 성장 위주인 LEVIR 라벨을 반영했을 수 있습니다. 프랑스 시험의 사라진 건물 재현율은 README에 기록했습니다.
 - **작은 객체:** 고립 변화 중 약 50m² 미만은 자주 누락됩니다.
 - **사용:** 연구·교육용 데모이며 실제 운용 판단에 사용할 수 없습니다.
-- **정합:** A/B 1px 초과 이동 시 경고합니다. phase correlation은 실제 변화에도 영향을 받을 수 있습니다.
+- **정합:** 선택형 보정은 x/y 평행 이동만 다룹니다. 모호한 경우 원본을 확인하세요.
 - **해상도:** 약 0.5m/px에서 학습했으며 더 거친 GSD, 선명도 불일치, blur에 민감합니다.
 - **라이선스:** LEVIR 학술 조건과 TinyCD 비상업 연구 조건을 따릅니다. 데이터·가중치·미리보기는 Git에서 제외합니다.
 - **NAIP:** USDA 공개 도메인 항공영상의 작은 영역으로, 정답이 없는 질적 결과입니다.

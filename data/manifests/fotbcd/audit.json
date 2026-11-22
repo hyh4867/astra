@@ -1,0 +1,29 @@
+{
+  "test": {
+    "source": 979,
+    "split_local_id_reuse": 0,
+    "excluded": 0,
+    "eligible": 979,
+    "used": 979,
+    "metadata_sha256": "76ccf1916da08635667e16608ec14e8796fcf87f91ac5e3c4e8396c43a73f51d",
+    "sha256": "9cd81f0fc028aac3ae174b7c1bef72ecd9578d2dea124cef8f950725231966cd"
+  },
+  "validation": {
+    "source": 984,
+    "split_local_id_reuse": 979,
+    "excluded": 0,
+    "eligible": 984,
+    "used": 984,
+    "metadata_sha256": "28083b2a809361f12a16bb56fd211d9cc239bb892f2eac224688053411460a24",
+    "sha256": "30c6cadb847f0ffc6c4babc2b09fc655005c20d56ff08d17912522dc86d1ace0"
+  },
+  "train": {
+    "source": 25908,
+    "split_local_id_reuse": 984,
+    "excluded": 0,
+    "eligible": 25908,
+    "used": 1024,
+    "metadata_sha256": "9043dab274dc3aaa056b36e27aad926bc0248f7eb80333d74f42bf8e473ecca3",
+    "sha256": "fbc1a6cade91c59dda4ed92dfe8f06ef310273e772545d9cf2a2ef1c3da970e0"
+  }
+}

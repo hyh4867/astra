@@ -1,0 +1,5 @@
+{
+  "cutoff": 0.3,
+  "grid": "half",
+  "reg": "off"
+}

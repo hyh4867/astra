@@ -22,3 +22,13 @@ logs/
 outputs/.r4-chrome-profile/
 outputs/.r4-chrome-gui-profile/
 vendor/tinycd/models/
+# Generated figures, demo media and model artifacts are local to each run.
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.mp4
+*.pth
+*.pt
+*.safetensors

@@ -1,0 +1,162 @@
+[
+  {
+    "matches": 5,
+    "name": "718",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 0,
+    "name": "72",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "dx": 3.319854736328125,
+    "dy": 0.355865478515625,
+    "half_difference": 461.792365484503,
+    "held_out_residual_px": 2.441514424593681,
+    "inlier_fraction": 0.5294117647058824,
+    "inliers": 9,
+    "length": 3.338873419151951,
+    "matches": 17,
+    "name": "820",
+    "pass_geometry": false,
+    "quadrants": 2,
+    "residual_px": 1.477844257817138
+  },
+  {
+    "matches": 4,
+    "name": "955",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 6,
+    "name": "189",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 7,
+    "name": "171",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 9,
+    "name": "587",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 8,
+    "name": "502",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 3,
+    "name": "455",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 0,
+    "name": "809",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 4,
+    "name": "380",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 1,
+    "name": "928",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 3,
+    "name": "499",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 1,
+    "name": "790",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 3,
+    "name": "821",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 1,
+    "name": "25",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "dx": 452.72965812683105,
+    "dy": 452.39695739746094,
+    "half_difference": 644.3252674620065,
+    "held_out_residual_px": 645.346147759185,
+    "inlier_fraction": 0.08333333333333333,
+    "inliers": 1,
+    "length": 640.0212109064179,
+    "matches": 12,
+    "name": "113",
+    "pass_geometry": false,
+    "quadrants": 1,
+    "residual_px": 644.6780677506913
+  },
+  {
+    "matches": 1,
+    "name": "792",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 6,
+    "name": "319",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 0,
+    "name": "443",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 7,
+    "name": "77",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 3,
+    "name": "289",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 0,
+    "name": "559",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  },
+  {
+    "matches": 1,
+    "name": "324",
+    "pass_geometry": false,
+    "reason": "fewer_than_12_matches"
+  }
+]

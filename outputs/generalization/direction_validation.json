@@ -1,0 +1,20 @@
+{
+  "available": true,
+  "matched": 984,
+  "methods": {
+    "original": {
+      "demolished": {
+        "hits": 67678,
+        "pixels": 3053712,
+        "recall": 0.02216253530129888
+      },
+      "new": {
+        "hits": 2022248,
+        "pixels": 10173712,
+        "recall": 0.19877189368049736
+      }
+    }
+  },
+  "split": "validation",
+  "total": 984
+}

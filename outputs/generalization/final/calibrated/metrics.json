@@ -1,0 +1,91 @@
+{
+  "all_objects": {
+    "bin": "all",
+    "completeness": 0.4538087520259319,
+    "found": 560,
+    "null": 0.018638573743922204,
+    "null_found": 23,
+    "objects": 1234,
+    "skill": 0.4434351775392238
+  },
+  "bins": [
+    {
+      "bin": 0,
+      "completeness": 0.11678832116788321,
+      "found": 16,
+      "null": 0.014598540145985401,
+      "null_found": 2,
+      "objects": 137,
+      "skill": 0.1037037037037037
+    },
+    {
+      "bin": 1,
+      "completeness": 0.30612244897959184,
+      "found": 45,
+      "null": 0.027210884353741496,
+      "null_found": 4,
+      "objects": 147,
+      "skill": 0.2867132867132868
+    },
+    {
+      "bin": 2,
+      "completeness": 0.6,
+      "found": 174,
+      "null": 0.013793103448275862,
+      "null_found": 4,
+      "objects": 290,
+      "skill": 0.5944055944055944
+    },
+    {
+      "bin": 3,
+      "completeness": 0.632996632996633,
+      "found": 188,
+      "null": 0.026936026936026935,
+      "null_found": 8,
+      "objects": 297,
+      "skill": 0.6228373702422145
+    },
+    {
+      "bin": 4,
+      "completeness": 0.42857142857142855,
+      "found": 75,
+      "null": 0.017142857142857144,
+      "null_found": 3,
+      "objects": 175,
+      "skill": 0.41860465116279066
+    },
+    {
+      "bin": 5,
+      "completeness": 0.4578313253012048,
+      "found": 38,
+      "null": 0.012048192771084338,
+      "null_found": 1,
+      "objects": 83,
+      "skill": 0.45121951219512196
+    },
+    {
+      "bin": 6,
+      "completeness": 0.22857142857142856,
+      "found": 24,
+      "null": 0.009523809523809525,
+      "null_found": 1,
+      "objects": 105,
+      "skill": 0.22115384615384615
+    }
+  ],
+  "commit": "8eb35fe859453f270a173b49801f922e44e37a78",
+  "config_sha256": "7e33a106d22b7fc42b155b7fcdd4bdc054a0e1ec2b62d6b9845d691b20d77f80",
+  "f1": 0.3476195429675849,
+  "false_alarms": 624,
+  "false_ge5m2_per_km2": 23.671384973107124,
+  "false_per_km2": 60.785778696373846,
+  "fn": 11489401,
+  "fp": 1273082,
+  "git_dirty": false,
+  "iou": 0.21037500261404118,
+  "km2": 10.265559040000001,
+  "precision": 0.7275846920589312,
+  "recall": 0.22836232621464386,
+  "test_manifest_sha256": "9cd81f0fc028aac3ae174b7c1bef72ecd9578d2dea124cef8f950725231966cd",
+  "tp": 3400231
+}

@@ -1,0 +1,5 @@
+aspect,area,objects,found,completeness
+compact,at_least_25m2,865,380,0.4393063583815029
+compact,under_25m2,42,7,0.16666666666666666
+elongated,at_least_25m2,200,52,0.26
+elongated,under_25m2,113,25,0.22123893805309736

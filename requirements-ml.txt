@@ -1,3 +1,5 @@
 # Install after requirements.txt in the project venv.
 torch>=2.6
 torchvision>=0.21
+# Parquet reader for the pinned FOTBCD release.
+pyarrow>=14

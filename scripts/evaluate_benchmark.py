@@ -34,11 +34,12 @@ class Sample:
     gray_diff: np.ndarray
 
 
-def load_samples(split: str):
+def load_samples(split: str, names=None):
     base = DATA / split
-    names = sorted(p.name for p in (base / "A").glob("*.png"))
-    if not names:
-        raise FileNotFoundError(f"No images in {base / 'A'}")
+    if names is None:
+        names = sorted(p.name for p in (base / "A").glob("*.png"))
+        if not names:
+            raise FileNotFoundError(f"No images in {base / 'A'}")
     for name in names:
         paths = [base / sub / name for sub in ("A", "B", "label")]
         if not all(p.is_file() for p in paths):

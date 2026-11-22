@@ -1,0 +1,48 @@
+{
+  "available": true,
+  "commit": "8eb35fe859453f270a173b49801f922e44e37a78",
+  "config_sha256": "7e33a106d22b7fc42b155b7fcdd4bdc054a0e1ec2b62d6b9845d691b20d77f80",
+  "git_dirty": false,
+  "matched": 979,
+  "methods": {
+    "adapted": {
+      "demolished": {
+        "hits": 239776,
+        "pixels": 3573225,
+        "recall": 0.06710352692595624
+      },
+      "new": {
+        "hits": 5722640,
+        "pixels": 11556239,
+        "recall": 0.4951991733642753
+      }
+    },
+    "calibrated": {
+      "demolished": {
+        "hits": 118627,
+        "pixels": 3573225,
+        "recall": 0.033198860972930615
+      },
+      "new": {
+        "hits": 3268669,
+        "pixels": 11556239,
+        "recall": 0.2828488576603513
+      }
+    },
+    "original": {
+      "demolished": {
+        "hits": 33631,
+        "pixels": 3573225,
+        "recall": 0.009411945791266993
+      },
+      "new": {
+        "hits": 2154201,
+        "pixels": 11556239,
+        "recall": 0.1864102152958242
+      }
+    }
+  },
+  "split": "test",
+  "test_manifest_sha256": "9cd81f0fc028aac3ae174b7c1bef72ecd9578d2dea124cef8f950725231966cd",
+  "total": 979
+}

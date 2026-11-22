@@ -1,0 +1,55 @@
+{
+  "best_new": "dft_5",
+  "scores": [
+    {
+      "clean_loss": 0.0017532725541464789,
+      "eligible": true,
+      "policy": "centroid_4",
+      "recovery": 0.2560740399994577,
+      "relative": 0.02238420184656147
+    },
+    {
+      "clean_loss": 0.0028441347342286205,
+      "eligible": false,
+      "policy": "dft_4",
+      "recovery": 0.2695550208247189,
+      "relative": 0.0451184463531091
+    },
+    {
+      "clean_loss": 0.0,
+      "eligible": true,
+      "policy": "dft_5",
+      "recovery": 0.20188342261219341,
+      "relative": 0.0451184463531091
+    },
+    {
+      "clean_loss": 0.0,
+      "eligible": true,
+      "policy": "dft_6",
+      "recovery": 0.16321490199411184,
+      "relative": 0.0451184463531091
+    },
+    {
+      "clean_loss": 0.003215662656930407,
+      "eligible": false,
+      "policy": "ecc_4",
+      "recovery": 0.2035215661585598,
+      "relative": 0.11051628596471443
+    },
+    {
+      "clean_loss": 0.0,
+      "eligible": true,
+      "policy": "ecc_5",
+      "recovery": 0.16421989919239596,
+      "relative": 0.11051628596471443
+    },
+    {
+      "clean_loss": 0.0,
+      "eligible": true,
+      "policy": "ecc_6",
+      "recovery": 0.12607701519907846,
+      "relative": 0.11051628596471443
+    }
+  ],
+  "selected": "centroid_4"
+}

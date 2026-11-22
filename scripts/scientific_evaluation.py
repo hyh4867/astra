@@ -7,13 +7,10 @@ import time
 
 import cv2
 import numpy as np
-import torch
 from PIL import Image, ImageDraw
 
-from evaluate_benchmark import (
-    DATA, OUT, ROOT, ChangeClassifier, Sample, basic_prediction, improved_prediction,
-    load_samples, tinycd_predict,
-)
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "outputs"
 
 METHODS = ("OpenCV basic", "OpenCV improved", "TinyCD")
 BASIC_THRESHOLD = 105
@@ -164,6 +161,7 @@ def completeness_png(rows):
 
 
 def object_analysis(samples, model, device):
+    from evaluate_benchmark import basic_prediction, improved_prediction, tinycd_predict
     global all_objects
     all_objects={m:{"gt":[],"pred":[]} for m in METHODS}
     base_masks={}; total_times={m:0.0 for m in METHODS}
@@ -251,6 +249,7 @@ def robustness_chart(rows):
 
 
 def robustness(samples, model, device, base_masks):
+    from evaluate_benchmark import Sample, basic_prediction, improved_prediction, tinycd_predict
     names=sorted(s.name for s in samples)
     rng_select=np.random.default_rng(ROBUST_SEED)
     selected=list(rng_select.choice(names,size=ROBUST_N,replace=False))
@@ -294,6 +293,8 @@ def robustness(samples, model, device, base_masks):
 
 
 def main():
+    from evaluate_benchmark import load_samples, ChangeClassifier
+    import torch
     OUT.mkdir(exist_ok=True)
     samples=list(load_samples("test"))
     device=torch.device("mps" if torch.backends.mps.is_available() else "cpu")
