@@ -45,6 +45,26 @@ Directional recall is the fraction of pixels inside each polygon class covered b
 
 Fine-tuning used 1,024 French training pairs. The third epoch had the highest validation F1. On the original LEVIR-CD test, F1 went from **0.911 to 0.896**. Before inference, the independent reviewer predicted a French F1 of 0.35 (0.25–0.50) for the original checkpoint and 0.65 (0.55–0.75) after fine-tuning. Both observations fell below the corresponding forecast ranges. [train manifest](data/manifests/fotbcd/train.csv) · [training history](outputs/generalization/training.csv) · [levir_original.csv](outputs/generalization/levir_original.csv) · [levir_adapted.csv](outputs/generalization/levir_adapted.csv) · [preregistration](docs/2026-11-21-generalization-preregistration.md)
 
+## Direction study
+
+We designed this follow-up after seeing how often the adapted model missed disappeared buildings on the French test set. We reused the same 979 FOTBCD-Binary test pairs. We repeated fine-tuning with seeds 42, 1042 and 2042 on the same training pairs. The forward-only model's test F1 ranged from 0.529 to 0.559 across seeds. [Design and seed selection](docs/PREREGISTRATION_DIRECTION.md) · [Per-seed scores](outputs/direction/scores.csv)
+
+Input order mattered. On validation, mean F1 was 0.574 with the older image first and 0.306 in reverse. Randomly swapping the two images during training brought those scores to 0.567 and 0.404. On the French test set, this training change alone raised recall for disappeared buildings from 6.84% to 12.40%. We also ran each pair in both orders and took the larger change probability at each pixel. [Validation counts by order](outputs/direction/validation.csv) · [Test results by training method](outputs/direction/family_summary.csv)
+
+The control below uses the same adapted weights in every row. Precision and recall are pixel measures on FOTBCD. All scores are means across the three seeds. [French and LEVIR scores](outputs/direction_control/means.csv)
+
+| Inference | Threshold | French F1 | French precision | Newly appeared buildings recall | Disappeared buildings recall | LEVIR F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Forward | 0.50 | 0.540 | 0.773 | 51.52% | 6.84% | 0.897 |
+| Forward | 0.30 | 0.571 | 0.695 | 59.17% | 11.91% | 0.893 |
+| Both orders, maximum | 0.50 | 0.575 | 0.722 | 53.76% | 27.88% | 0.884 |
+| Both orders, maximum | 0.30 | 0.592 | 0.629 | 61.90% | 36.55% | 0.862 |
+| Both orders, validation precision floor | 0.65 | 0.543 | 0.779 | 47.28% | 22.63% | 0.872 |
+
+At threshold 0.50, switching to both orders accounted for 70.8% of the total gain in disappeared-building recall along the path from forward at 0.50 to both orders at 0.30. At 0.30, both orders gave 3.07 times the disappeared-building recall of forward inference. The mean F1 gain was 0.0205, but the seed-42 paired bootstrap interval for the F1 difference included zero (95% interval −0.0007 to +0.0467). The comparison therefore missed the preregistered criterion for confirming a fusion effect. [Decomposition](outputs/direction_control/path_fractions.json) · [Mean differences](outputs/direction_control/contrasts.csv) · [Bootstrap intervals](outputs/direction_control/bootstrap.csv)
+
+For the precision-matched comparison, we selected the threshold with the highest validation recall among those reaching the forward model's validation precision. The selected threshold of 0.65 gave test precision of 0.779 against 0.773 for forward inference at 0.50. Recall for disappeared buildings rose from 6.84% to 22.63%, while recall for newly appeared buildings fell from 51.52% to 47.28% and LEVIR F1 fell from 0.897 to 0.872. Processing both orders required two model passes and took 1.98 times as long for probability computation on this run. [Validation selection](outputs/direction_control/frozen.json) · [Test scores](outputs/direction_control/means.csv) · [Measured time](outputs/direction_control/timing.json)
+
 ## How it was verified
 
 - **Held-out benchmark.** Scores come from the official LEVIR-CD test split (128 pairs) with a fixed threshold. The OpenCV baselines (absolute difference with a fixed or Otsu threshold) are scored the same way.

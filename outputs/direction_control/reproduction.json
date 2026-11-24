@@ -1,0 +1,105 @@
+{
+  "checks": [
+    {
+      "family": "A",
+      "fields": [
+        "tp",
+        "fp",
+        "fn",
+        "new_hits",
+        "new_pixels",
+        "disappeared_hits",
+        "disappeared_pixels"
+      ],
+      "matched": 979,
+      "seed": 42
+    },
+    {
+      "family": "A+T",
+      "fields": [
+        "tp",
+        "fp",
+        "fn",
+        "new_hits",
+        "new_pixels",
+        "disappeared_hits",
+        "disappeared_pixels"
+      ],
+      "matched": 979,
+      "seed": 42
+    },
+    {
+      "family": "A",
+      "fields": [
+        "tp",
+        "fp",
+        "fn",
+        "new_hits",
+        "new_pixels",
+        "disappeared_hits",
+        "disappeared_pixels"
+      ],
+      "matched": 979,
+      "seed": 1042
+    },
+    {
+      "family": "A+T",
+      "fields": [
+        "tp",
+        "fp",
+        "fn",
+        "new_hits",
+        "new_pixels",
+        "disappeared_hits",
+        "disappeared_pixels"
+      ],
+      "matched": 979,
+      "seed": 1042
+    },
+    {
+      "family": "A",
+      "fields": [
+        "tp",
+        "fp",
+        "fn",
+        "new_hits",
+        "new_pixels",
+        "disappeared_hits",
+        "disappeared_pixels"
+      ],
+      "matched": 979,
+      "seed": 2042
+    },
+    {
+      "family": "A+T",
+      "fields": [
+        "tp",
+        "fp",
+        "fn",
+        "new_hits",
+        "new_pixels",
+        "disappeared_hits",
+        "disappeared_pixels"
+      ],
+      "matched": 979,
+      "seed": 2042
+    }
+  ],
+  "commit": "3d6948c94b208c4b7636385a9e712b4c79c20555",
+  "git_dirty": false,
+  "source": {
+    "levir_manifest": "961d6a0ede7d84a2f18a2ea5745e7371363feaaa9871688911be902cb355d80b",
+    "manifests": {
+      "test": "9cd81f0fc028aac3ae174b7c1bef72ecd9578d2dea124cef8f950725231966cd",
+      "train": "fbc1a6cade91c59dda4ed92dfe8f06ef310273e772545d9cf2a2ef1c3da970e0",
+      "validation": "30c6cadb847f0ffc6c4babc2b09fc655005c20d56ff08d17912522dc86d1ace0"
+    },
+    "previous_config": "8af5058f073d668a173b02df7e6580988067800a1fb32209009267683b276d44",
+    "previous_counts": "f968d233bbd45f3ace15d1a9448154638941cd606d06f3d0b3a9c9e78691d3fc",
+    "weights": {
+      "42": "e49f2528798e30f7046a3bab818311ac9844885b5d94287dc5f1f20d5f2cd7ef",
+      "1042": "69d2cfe9da817f8a79a983867b3298bca634c5dd14a6467d6093660c06404a6f",
+      "2042": "0769eb2afea4d4eebf4efd39d941db0f61b437b2ed84ece2abad9d710da48d09"
+    }
+  }
+}

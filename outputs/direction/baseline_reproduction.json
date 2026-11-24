@@ -1,0 +1,30 @@
+[
+  {
+    "current_f1": 0.5320099030905739,
+    "dataset": "fotbcd",
+    "pairs": 979,
+    "pairs_with_any_difference": 0,
+    "previous_f1": 0.5320099030905739,
+    "total_count_differences": {
+      "disappeared_hits": 0,
+      "disappeared_pixels": 0,
+      "fn": 0,
+      "fp": 0,
+      "new_hits": 0,
+      "new_pixels": 0,
+      "tp": 0
+    }
+  },
+  {
+    "current_f1": 0.8957213038381854,
+    "dataset": "levir",
+    "pairs": 128,
+    "pairs_with_any_difference": 0,
+    "previous_f1": 0.8957213038381854,
+    "total_count_differences": {
+      "fn": 0,
+      "fp": 0,
+      "tp": 0
+    }
+  }
+]

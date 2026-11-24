@@ -1,0 +1,78 @@
+{
+  "baseline_commit": "595c3bb15f74c0c64c60b3ee0eed1b9146d126ef",
+  "epoch_history_sha256": "914d77526cc7c3157eb11ef3d85cef264ecee780f989f528322e3789fbf7978b",
+  "families": {
+    "A": {
+      "cutoff": 0.5,
+      "family": "A",
+      "mean_validation_f1": 0.5738810373608423,
+      "mode": "forward"
+    },
+    "A+T": {
+      "cutoff": 0.3,
+      "family": "A+T",
+      "mean_validation_f1": 0.6354513894017856,
+      "mode": "max"
+    },
+    "S": {
+      "cutoff": 0.5,
+      "family": "S",
+      "mean_validation_f1": 0.5672843820217438,
+      "mode": "forward"
+    },
+    "S+T": {
+      "cutoff": 0.4,
+      "family": "S+T",
+      "mean_validation_f1": 0.619881619981417,
+      "mode": "max"
+    }
+  },
+  "levir_test_manifest": "961d6a0ede7d84a2f18a2ea5745e7371363feaaa9871688911be902cb355d80b",
+  "manifests": {
+    "test": "9cd81f0fc028aac3ae174b7c1bef72ecd9578d2dea124cef8f950725231966cd",
+    "train": "fbc1a6cade91c59dda4ed92dfe8f06ef310273e772545d9cf2a2ef1c3da970e0",
+    "validation": "30c6cadb847f0ffc6c4babc2b09fc655005c20d56ff08d17912522dc86d1ace0"
+  },
+  "models": [
+    {
+      "epoch": 3,
+      "model": "A",
+      "seed": 42,
+      "weights_sha256": "e49f2528798e30f7046a3bab818311ac9844885b5d94287dc5f1f20d5f2cd7ef"
+    },
+    {
+      "epoch": 3,
+      "model": "A",
+      "seed": 1042,
+      "weights_sha256": "69d2cfe9da817f8a79a983867b3298bca634c5dd14a6467d6093660c06404a6f"
+    },
+    {
+      "epoch": 3,
+      "model": "A",
+      "seed": 2042,
+      "weights_sha256": "0769eb2afea4d4eebf4efd39d941db0f61b437b2ed84ece2abad9d710da48d09"
+    },
+    {
+      "epoch": 3,
+      "model": "S",
+      "seed": 42,
+      "weights_sha256": "0bfce998def278f2e476c461afec454ad3e3ea44d4c93ee8b9c77498b089c949"
+    },
+    {
+      "epoch": 3,
+      "model": "S",
+      "seed": 1042,
+      "weights_sha256": "96db35d9f3dc77ba1312e46472b367aa5008d0e21d823a98170ba877b3da99cf"
+    },
+    {
+      "epoch": 3,
+      "model": "S",
+      "seed": 2042,
+      "weights_sha256": "ecff370842e0ec46a11ad7749e4167c7304e902effed855788ef09b9b5ac85b5"
+    }
+  ],
+  "previous_config_sha256": "fac3edc87355235c68839aacdebc7ac2e42edf18b388776914d7e221b5308513",
+  "primary_challenger": "A+T",
+  "upstream_checkpoint": "743645b87199c96bd0c3271ae5df6f0918b3f1d84618dfb9396843ca08ee4a3e",
+  "validation_sha256": "8f9ba68535bd2f91243f38374d7101ecd957e92eac9a3babc5f04576cd8bdd30"
+}

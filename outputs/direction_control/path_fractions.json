@@ -1,0 +1,7 @@
+{
+  "fusion_at_30": 0.8293676033018414,
+  "fusion_at_50": 0.7080251800887432,
+  "threshold_forward": 0.17063239669815855,
+  "threshold_max": 0.29197481991125684,
+  "total_disappeared_recall_gain": 0.2971521058241038
+}
